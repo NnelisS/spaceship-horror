@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Input;
+using InputHandler;
 
 [RequireComponent(typeof(Movement), typeof(PlayerCamera))]
 public class PlayerController : MonoBehaviour
