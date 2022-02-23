@@ -9,13 +9,16 @@ public class PhoneRadar : MonoBehaviour
     public Camera cameraOne;
     public Camera cameraTwo;
 
-    public bool inOut = true;
+    public bool outer = false;
+
+    public bool inOut = false;
     public bool usable = true;
     public float timer = 2.75f;
 
 
     private void Start()
     {
+        inOut = false;
         cameraTwo.enabled = false;
         phone = GetComponentInChildren<Animator>();
     }
@@ -24,13 +27,16 @@ public class PhoneRadar : MonoBehaviour
     {
         if (usable)
         {
-            if (inOut)
+            if (inOut == true)
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
+                    Debug.Log("In");
                     phone.Play("Phone Flip In");
+                    cameraTwo.enabled = !cameraTwo.enabled;
+                    cameraOne.enabled = !cameraOne.enabled;
+                    //inOut = false;
                     usable = false;
-                    inOut = false;
                 }
             }
 
@@ -38,9 +44,11 @@ public class PhoneRadar : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
+                    Debug.Log("Out");
                     phone.Play("Phone Flip Out");
+                    StartCoroutine(OpenRader());
+                    //inOut = true;
                     usable = false;
-                    inOut = true;
                 }
             }
         }
@@ -52,17 +60,22 @@ public class PhoneRadar : MonoBehaviour
             {
                 if (inOut == false)
                 {
-                    cameraOne.enabled = !cameraOne.enabled;
-                    cameraTwo.enabled = !cameraTwo.enabled;
+                    inOut = true;
                 }
-                if (inOut)
+                else if (inOut == true)
                 {
-                    cameraOne.enabled = !cameraOne.enabled;
-                    cameraTwo.enabled = !cameraTwo.enabled;
+                    inOut = false;
                 }
                 timer = 2.75f;
                 usable = true;
             }
         }
+    }
+
+    private IEnumerator OpenRader()
+    {
+        yield return new WaitForSeconds(2.75f);
+        cameraOne.enabled = !cameraOne.enabled;
+        cameraTwo.enabled = !cameraTwo.enabled;
     }
 }

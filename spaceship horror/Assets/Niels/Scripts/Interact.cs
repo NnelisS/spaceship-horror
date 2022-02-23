@@ -16,12 +16,12 @@ public class Interact : MonoBehaviour
     public void OnMouseOver()
     {
         gameObject.GetComponent<MeshRenderer>().material.color = new Color(255, 255, 255);
-        Debug.Log("Hovering");
+        //Debug.Log("Hovering");
     }
 
     private void OnMouseExit()
     {
         gameObject.GetComponent<MeshRenderer>().material.color = new Color(0, 0, 0);
-        Debug.Log("NotHovering");
+        //Debug.Log("NotHovering");
     }
 }
