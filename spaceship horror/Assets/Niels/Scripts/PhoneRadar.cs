@@ -12,8 +12,6 @@ public class PhoneRadar : MonoBehaviour
     public Camera cameraOne;
     public Camera cameraTwo;
 
-    private bool outer = false;
-
     private bool inOut = false;
     private bool usable = true;
     private float timer = 2.75f;
