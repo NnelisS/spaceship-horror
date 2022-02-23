@@ -6,18 +6,22 @@ public class PhoneRadar : MonoBehaviour
 {
     private Animator phone;
 
+    public GameObject radarCanvas;
+    public GameObject informationCanvas;
+
     public Camera cameraOne;
     public Camera cameraTwo;
 
-    public bool outer = false;
+    private bool outer = false;
 
-    public bool inOut = false;
-    public bool usable = true;
-    public float timer = 2.75f;
+    private bool inOut = false;
+    private bool usable = true;
+    private float timer = 2.75f;
 
 
     private void Start()
     {
+        radarCanvas.SetActive(false);
         inOut = false;
         cameraTwo.enabled = false;
         phone = GetComponentInChildren<Animator>();
@@ -35,7 +39,8 @@ public class PhoneRadar : MonoBehaviour
                     phone.Play("Phone Flip In");
                     cameraTwo.enabled = !cameraTwo.enabled;
                     cameraOne.enabled = !cameraOne.enabled;
-                    //inOut = false;
+                    radarCanvas.SetActive(false);
+                    informationCanvas.SetActive(true);
                     usable = false;
                 }
             }
@@ -47,7 +52,6 @@ public class PhoneRadar : MonoBehaviour
                     Debug.Log("Out");
                     phone.Play("Phone Flip Out");
                     StartCoroutine(OpenRader());
-                    //inOut = true;
                     usable = false;
                 }
             }
@@ -77,5 +81,7 @@ public class PhoneRadar : MonoBehaviour
         yield return new WaitForSeconds(2.75f);
         cameraOne.enabled = !cameraOne.enabled;
         cameraTwo.enabled = !cameraTwo.enabled;
+        radarCanvas.SetActive(true);
+        informationCanvas.SetActive(false);
     }
 }
