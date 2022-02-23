@@ -47,5 +47,4 @@ public class AI : MonoBehaviour
         if (aggro) { Gizmos.DrawLine(transform.position, player.position); }
     }
 
-
 }

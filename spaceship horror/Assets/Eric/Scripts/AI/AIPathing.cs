@@ -4,13 +4,12 @@ using UnityEngine.AI;
 
 public class AIPathing : MonoBehaviour
 {
-    [SerializeField] List<AIPath> paths;
-
+    List<AIPath> paths;
     NavMeshAgent navMeshAgent;
     AIPath currentPath;
     Transform currentTarget;
     int currentPathIndex = 0;
-    public bool reversePath = false;
+    bool reversePath = false;
 
     void Awake()
     {
