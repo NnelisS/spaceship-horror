@@ -22,16 +22,22 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        if (fov.TargetInView(player) && aggro == false) {
-            Aggro();
+        if (fov.TargetInView(player) && !aggro) {
+            Aggro(true);
+        } else if (!fov.TargetInView(player) && aggro){
+            Aggro(false);
         }
     }
 
-    void Aggro()
+    void Aggro(bool setAggro)
     {
-        aggro = true;
-        pathing.SetTarget(player);
-        StartCoroutine(AggroRoutine());
+        if (setAggro) {
+            aggro = true;
+            pathing.SetTarget(player);
+            StopAllCoroutines();
+        }
+        else
+            StartCoroutine(AggroRoutine());
     }
 
     IEnumerator AggroRoutine()

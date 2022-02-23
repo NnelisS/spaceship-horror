@@ -14,8 +14,10 @@ public class AIPathing : MonoBehaviour
     void Awake()
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
+        paths = new List<AIPath>();
 
         foreach (AIPathCreator _path in FindObjectsOfType(typeof(AIPathCreator))) {
+            Debug.Log(_path.path);
             paths.Add(_path.path);
         }
     }
@@ -33,7 +35,7 @@ public class AIPathing : MonoBehaviour
 
     void FollowPath()
     {
-        if (currentPath == null) { LookForClosestPath(); return; }
+        if (currentPath == null) { LookForClosestPath(); }
         navMeshAgent.destination = currentPath[currentPathIndex];
 
         if ((transform.position - currentPath[currentPathIndex]).sqrMagnitude < 2f) {
@@ -75,10 +77,6 @@ public class AIPathing : MonoBehaviour
     {
         currentPath = null;
         currentTarget = target;
-
-        LookForClosestPath();
-
-
     }
 
     void FollowTarget()
