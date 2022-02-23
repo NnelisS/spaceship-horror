@@ -17,7 +17,7 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {        
-        Debug.Log(items.Count);
+        //Debug.Log(items.Count);
     }
 
     public void UpdateUI()
