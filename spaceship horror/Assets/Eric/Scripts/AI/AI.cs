@@ -1,7 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(AIPathing), typeof(AIFov))]
 public class AI : MonoBehaviour
@@ -12,11 +10,13 @@ public class AI : MonoBehaviour
 
     [SerializeField] States state = States.Roaming;
 
-    [Header("Aggro Behavior")]
-    public float aggroTime = 1.0f;
-    [Header("SearchBehavior")]
-    public float searchTime = 1.0f;
-    public float searchAreaSize = 10f;
+    [Header("Enemy attributes")]
+    [SerializeField] float normalSpeed;
+    [SerializeField] float chasingSpeed;
+
+    [Header("Search Behavior")]
+    [SerializeField] float searchTime = 1.0f;
+    [SerializeField] public float searchAreaSize = 10f;
 
     void Awake()
     {
@@ -24,18 +24,24 @@ public class AI : MonoBehaviour
         fov = GetComponent<AIFov>();
     }
 
+    void Start()
+    {
+        pathing.SetSpeed(normalSpeed);
+    }
+
     void Update()
     {
 
-        if(state != States.Chasing) {
+        if (state != States.Chasing) {
             if (fov.TargetInView(player.transform)) {
                 StopAllCoroutines();
                 state = States.Chasing;
+                pathing.SetSpeed(chasingSpeed);
                 pathing.SetTarget(player.transform);
             }
         }
 
-        if(state == States.Chasing) {
+        if (state == States.Chasing) {
             if (!fov.TargetInView(player.transform)) {
                 state = States.Searching;
                 StartCoroutine(Searching(player.transform.position));
@@ -59,10 +65,9 @@ public class AI : MonoBehaviour
     IEnumerator NewSearchPos(Vector3 searchArea)
     {
         if (pathing.hasDestination) { yield return null; }
-        else { 
-            yield return new WaitForSeconds(1f);
-            Debug.Log(searchArea);
-
+        else {
+            pathing.SetSpeed(normalSpeed);
+            yield return new WaitForSeconds(Random.Range(0.75f, 1.5f));
             pathing.SetTarget(searchArea + Random.insideUnitSphere * searchAreaSize);
         }
         StartCoroutine(NewSearchPos(searchArea));
@@ -76,10 +81,8 @@ public class AI : MonoBehaviour
         Gizmos.color = Color.red;
         if (state == States.Chasing) { Gizmos.DrawLine(transform.position, player.transform.position); }
 
-        if(pathing != null)
-            if (pathing.hasDestination) {
-                Gizmos.DrawWireSphere(pathing.currentDestination, 1f);
-            }
+        if (pathing != null && pathing.hasDestination)
+            Gizmos.DrawWireSphere(pathing.currentDestination, 1f);
     }
 
     enum States

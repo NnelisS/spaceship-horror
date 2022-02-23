@@ -4,13 +4,14 @@ using UnityEngine.AI;
 
 public class AIPathing : MonoBehaviour
 {
-
+    [HideInInspector]
     public bool isPathing = true;
 
     List<AIPath> paths;
     NavMeshAgent navMeshAgent;
 
     public bool hasDestination { get { return (currentDestination != Vector3.zero); } }
+    [HideInInspector]
     public Vector3 currentDestination = Vector3.zero;
 
 
@@ -101,6 +102,12 @@ public class AIPathing : MonoBehaviour
         currentTarget = null;
         currentDestination = new Vector3(target.x, transform.position.y, target.z);
     }
+
+    public void SetSpeed(float speed)
+    {
+        navMeshAgent.speed = speed;
+    }
+
 
     void FollowTarget()
     {
