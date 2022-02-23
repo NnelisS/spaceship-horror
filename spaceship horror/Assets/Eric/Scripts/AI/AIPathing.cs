@@ -4,10 +4,19 @@ using UnityEngine.AI;
 
 public class AIPathing : MonoBehaviour
 {
+
+    public bool isPathing = true;
+
     List<AIPath> paths;
     NavMeshAgent navMeshAgent;
+
+    public bool hasDestination { get { return (currentDestination != Vector3.zero); } }
+    public Vector3 currentDestination = Vector3.zero;
+
+
     AIPath currentPath;
     Transform currentTarget;
+
     int currentPathIndex = 0;
     bool reversePath = false;
 
@@ -17,7 +26,6 @@ public class AIPathing : MonoBehaviour
         paths = new List<AIPath>();
 
         foreach (AIPathCreator _path in FindObjectsOfType(typeof(AIPathCreator))) {
-            Debug.Log(_path.path);
             paths.Add(_path.path);
         }
     }
@@ -28,9 +36,16 @@ public class AIPathing : MonoBehaviour
             FollowTarget();
         }
 
-        else {
-            FollowPath();
+        if (currentDestination != Vector3.zero) {
+            navMeshAgent.destination = currentDestination;
+            if ((transform.position - currentDestination).sqrMagnitude < 2f) {
+                currentDestination = Vector3.zero;  
+            }
+            return;
         }
+
+        if(isPathing)
+            FollowPath();
     }
 
     void FollowPath()
@@ -77,11 +92,19 @@ public class AIPathing : MonoBehaviour
     {
         currentPath = null;
         currentTarget = target;
+        currentDestination = Vector3.zero;
+    }
+
+    public void SetTarget(Vector3 target)
+    {
+        currentPath = null;
+        currentTarget = null;
+        currentDestination = new Vector3(target.x, transform.position.y, target.z);
     }
 
     void FollowTarget()
     {
-        navMeshAgent.destination = currentTarget.position;
+        currentDestination = currentTarget.position;
     }
 
 
