@@ -912,7 +912,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radarCanvas: {fileID: 1716812805}
   informationCanvas: {fileID: 401010113}
-  cameraOne: {fileID: 1586041038}
+  cameraOne: {fileID: 27953257}
   cameraTwo: {fileID: 729825054}
 --- !u!114 &468785916
 MonoBehaviour:
@@ -2221,7 +2221,14 @@ MonoBehaviour:
   maximumX: 360
   minimumY: -60
   maximumY: 60
+  rotationX: 0
+  rotationY: 0
+  rotArrayX: []
+  rotAverageX: 0
+  rotArrayY: []
+  rotAverageY: 0
   frameCounter: 20
+  originalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1355715767
 GameObject:
   m_ObjectHideFlags: 0
@@ -2438,7 +2445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1586041037
 AudioListener:
   m_ObjectHideFlags: 0
