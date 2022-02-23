@@ -45,7 +45,12 @@ public class AIPath
 
     public void MovePoint(int i, Vector3 pos)
     {
-        points[i] = new Vector3(pos.x, 0, pos.z);
+        points[i] = new Vector3(pos.x, points[i].y, pos.z);
+    }
+
+    public void UpdateY(int i, float y)
+    {
+        points[i] = new Vector3(points[i].x, y, points[i].z);
     }
 
     public void ToggleClosed()

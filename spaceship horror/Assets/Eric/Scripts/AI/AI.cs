@@ -3,28 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AIPathing))]
+[RequireComponent(typeof(AIPathing), typeof(AIFov))]
 public class AI : MonoBehaviour
 {
     [SerializeField] Transform player;
     AIPathing pathing;
+    AIFov fov;
 
     [Header("Aggro Behavior")]
-    public float aggroRadius = 10f;
     public float aggroTime = 1.0f;
     public bool aggro = false;
 
     void Awake()
     {
         pathing = GetComponent<AIPathing>();
+        fov = GetComponent<AIFov>();
     }
 
     void Update()
     {
-        //if((player.position - transform.position).magnitude < aggroRadius && aggro == false) {
-        //    Aggro();
-        //}
-
+        if (fov.TargetInView(player) && aggro == false) {
+            Aggro();
+        }
     }
 
     void Aggro()
@@ -41,11 +41,11 @@ public class AI : MonoBehaviour
         pathing.SetTarget(null);
     }
 
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, aggroRadius);
-        
+        if (aggro) { Gizmos.DrawLine(transform.position, player.position); }
     }
+
 
 }

@@ -23,6 +23,17 @@ public class AIPathEditor : Editor
             path.ToggleClosed();
             SceneView.RepaintAll();
         }
+
+        if(GUILayout.Button("Bake points")) {
+            creator.ResetY();
+            creator.UpdatePoints();
+            SceneView.RepaintAll();
+        }
+
+        if (GUILayout.Button("Reset Y")) {
+            creator.ResetY();
+            SceneView.RepaintAll();
+        }
     }
 
     void OnSceneGUI()

@@ -19,7 +19,6 @@ public class AIPathing : MonoBehaviour
         foreach (AIPathCreator _path in FindObjectsOfType(typeof(AIPathCreator))) {
             paths.Add(_path.path);
         }
-
     }
 
     void Update()
@@ -38,7 +37,7 @@ public class AIPathing : MonoBehaviour
         if (currentPath == null) { LookForClosestPath(); return; }
         navMeshAgent.destination = currentPath[currentPathIndex];
 
-        if ((transform.position - currentPath[currentPathIndex]).sqrMagnitude < 1f) {
+        if ((transform.position - currentPath[currentPathIndex]).sqrMagnitude < 2f) {
             currentPathIndex += reversePath ? -1 : 1;
 
             if (reversePath ? currentPathIndex < 0 : currentPathIndex >= currentPath.numPoints) {
