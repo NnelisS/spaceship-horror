@@ -311,7 +311,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 823
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1355,6 +1355,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837694718}
   m_CullTransparentMesh: 1
+--- !u!1 &846616750
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 846616752}
+  - component: {fileID: 846616751}
+  m_Layer: 0
+  m_Name: view
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &846616751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846616750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1fbb15bf92b84f40a1eb030765b5afe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 2
+  parameters:
+    albedo: {r: 1, g: 1, b: 1, a: 1}
+    meanFreePath: 4.54
+    anisotropy: 0
+    volumeMask: {fileID: 0}
+    textureScrollingSpeed: {x: 0, y: 0, z: 0}
+    textureTiling: {x: 1, y: 1, z: 1}
+    positiveFade: {x: 0, y: 0, z: 0}
+    negativeFade: {x: 0, y: 0, z: 0}
+    m_EditorUniformFade: 0
+    m_EditorPositiveFade: {x: 0, y: 0, z: 0}
+    m_EditorNegativeFade: {x: 0, y: 0, z: 0}
+    m_EditorAdvancedFade: 0
+    size: {x: 100, y: 100, z: 100}
+    invertFade: 0
+    distanceFadeStart: 10000
+    distanceFadeEnd: 10000
+    textureIndex: -1
+    textureOffset: {x: 0, y: 0, z: 0}
+--- !u!4 &846616752
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846616750}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.33547667, y: 0.44, z: 0.03}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &878042425
 GameObject:
   m_ObjectHideFlags: 0
@@ -1680,7 +1743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 906889484}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: LeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1714,7 +1777,7 @@ GameObject:
   - component: {fileID: 1160852290}
   - component: {fileID: 1160852292}
   - component: {fileID: 1160852291}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Video Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2214,21 +2277,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c81e1dadbda9254682b1dd2cefe7281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axes: 0
-  sensitivityX: 2
-  sensitivityY: 2
-  minimumX: -360
-  maximumX: 360
-  minimumY: -60
-  maximumY: 60
-  rotationX: 0
-  rotationY: 0
-  rotArrayX: []
-  rotAverageX: 0
-  rotArrayY: []
-  rotAverageY: 0
-  frameCounter: 20
-  originalRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1355715767
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,7 +3094,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2025368015}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3289,7 +3337,7 @@ GameObject:
   - component: {fileID: 3262998088865473812}
   - component: {fileID: 736801411110498316}
   - component: {fileID: 9151355738200067478}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: rightarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3451,7 +3499,7 @@ GameObject:
   - component: {fileID: 2308336393374085106}
   - component: {fileID: 2478724374627918146}
   - component: {fileID: 2974462547345101831}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3505,7 +3553,7 @@ GameObject:
   - component: {fileID: 7466765574205320124}
   - component: {fileID: 9150158863103131961}
   - component: {fileID: 223230005031278886}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: leftarm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3565,7 +3613,7 @@ GameObject:
   - component: {fileID: 5405997847393257490}
   - component: {fileID: 7845553329587764440}
   - component: {fileID: 8638464147871866126}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: tablet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
