@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -7,7 +8,6 @@ public class AIPathing : MonoBehaviour
 {
     [SerializeField]
     public bool pauseMovement = false;
-
     
     public bool isPathing = true;
 
@@ -17,13 +17,18 @@ public class AIPathing : MonoBehaviour
     public bool hasDestination { get { return (currentDestination != Vector3.zero); } }
     [HideInInspector]
     public Vector3 currentDestination = Vector3.zero;
-
+    List<Vector3> destinationList = new List<Vector3>();
 
     AIPath currentPath;
     Transform currentTarget;
 
     int currentPathIndex = 0;
     bool reversePath = false;
+
+    
+    public delegate void onReachedDestination();
+    public event onReachedDestination reachedDestinationEvent;
+
 
     void Awake()
     {
@@ -47,6 +52,18 @@ public class AIPathing : MonoBehaviour
         if (currentDestination != Vector3.zero) {
             navMeshAgent.destination = currentDestination;
             if ((transform.position - new Vector3(currentDestination.x, transform.position.y, currentDestination.z)).sqrMagnitude < 2f) {
+
+                if(destinationList.Count == 0 && reachedDestinationEvent != null) { 
+                    destinationList.Clear();  
+                    reachedDestinationEvent.Invoke();
+                    reachedDestinationEvent = null;
+                }
+
+                if(destinationList.Count > 0) {
+                    currentDestination = destinationList[0];
+                    destinationList.RemoveAt(0);
+                }
+                else
                 currentDestination = Vector3.zero;  
             }
             return;
@@ -108,6 +125,15 @@ public class AIPathing : MonoBehaviour
         currentPath = null;
         currentTarget = null;
         currentDestination = new Vector3(target.x, target.y, target.z);
+    }
+
+    public void SetMultipleTarget(List<Vector3> targets, onReachedDestination reachedDestination)
+    {
+        currentDestination = targets[0];
+        targets.RemoveAt(0);
+        destinationList = targets;
+
+        reachedDestinationEvent += reachedDestination;
     }
 
     public void SetSpeed(float speed)

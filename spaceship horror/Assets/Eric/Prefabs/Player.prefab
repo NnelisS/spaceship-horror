@@ -323,7 +323,6 @@ GameObject:
   - component: {fileID: 3767802875971445679}
   - component: {fileID: 3767802875971445676}
   - component: {fileID: 3767802875971445677}
-  - component: {fileID: 3767802875971445678}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -394,20 +393,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3767802875971445678
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3767802875971445680}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3767802876013806451
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,10 +446,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228e0704f021ff54a9ddee1bfedeb0b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 3767802876013806447}
-  movement: {fileID: 3767802876013806449}
   health: {fileID: 0}
+  ignoreLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  interactRadius: 10
   hiding: 0
+  hidingInside: {fileID: 0}
 --- !u!114 &3767802876013806447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +485,7 @@ MonoBehaviour:
   jumpForce: 5
   gravity: -9.81
   smoothTime: 0.1
+  controller: {fileID: 0}
 --- !u!114 &3767802876013806445
 MonoBehaviour:
   m_ObjectHideFlags: 0

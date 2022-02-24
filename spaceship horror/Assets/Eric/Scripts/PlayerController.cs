@@ -59,17 +59,17 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Hide()
+    public void Hide()
     {
         if (!hiding) {
             RaycastHit hit;
-            Physics.Raycast(transform.position, playerCamera.playerCamera.transform.forward, out hit, interactRadius, ignoreLayers);
+            Physics.Raycast(transform.position + new Vector3(0, playerCollider.height, 0), playerCamera.playerCamera.transform.forward, out hit, interactRadius, ignoreLayers);
 
             if (hit.collider != null) {
                 HideObject _object = hit.collider.gameObject.GetComponent<HideObject>();
                 if (_object != null) {
                     hiding = true;
-                    transform.position = _object.cameraPos - new Vector3(0, playerCollider.height, 0);
+                    transform.position = _object.cameraPos - new Vector3(0, playerCollider.height, 0) * 2;
                     transform.eulerAngles = new Vector3(0, -90, 0);
                     hidingInside = _object;
                     _object.hidingInside = true;
@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
         else {
             movement.Hide();
             playerCamera.Hide();
-            movement.controller.Move(transform.forward * 5);
+            movement.controller.Move(transform.forward * 2);
             hiding = false;
             hidingInside.hidingInside = false;
             hidingInside = null;

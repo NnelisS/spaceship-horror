@@ -8,12 +8,10 @@ public class HideObject : MonoBehaviour
     public Vector3 cameraPos { get { return transform.position.normalized + _cameraPos; } }
 
     public bool hidingInside = false;
-
-    public void enemyFoundPlayer()
+    public bool openObject()
     {
-
+        return hidingInside;
     }
-
 
     private void OnDrawGizmosSelected()
     {
