@@ -5,15 +5,25 @@ using UnityEngine;
 public class HideObject : MonoBehaviour
 {
     [SerializeField] Vector3 _cameraPos;
-    public Vector3 cameraPos { get { return transform.position.normalized + _cameraPos; } }
+    BoxCollider _collider;
 
-    public bool hidingInside = false;
-
-    public void enemyFoundPlayer()
+    private void Awake()
     {
-
+        _collider = GetComponent<BoxCollider>();
     }
 
+
+
+    public Vector3 cameraPos { get { return transform.position + _cameraPos; } }
+
+    
+
+
+    public bool hidingInside = false;
+    public bool openObject()
+    {
+        return hidingInside;
+    }
 
     private void OnDrawGizmosSelected()
     {

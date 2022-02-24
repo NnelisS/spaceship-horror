@@ -6,9 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public Slider healthBar;
+    [SerializeField]
+    Image healthImage;
     [SerializeField]
     private float currentHealth;
+
+    float timer;
 
     void Start()
     {
@@ -17,8 +20,11 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        if(healthBar == null) { return; }
-        healthBar.value = currentHealth;
+        timer += Time.deltaTime;
+        if(currentHealth > 100) { currentHealth = 100; }
+        if(timer > 3 && currentHealth < 100) { currentHealth += Time.deltaTime * 5; }
+
+        healthImage.color = new Color(1, 1, 1, (1 - currentHealth/100) * 1f);
 
         if (currentHealth <= 0)
         {
@@ -29,5 +35,6 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHealth -= damage;
+        timer = 0;
     }
 }

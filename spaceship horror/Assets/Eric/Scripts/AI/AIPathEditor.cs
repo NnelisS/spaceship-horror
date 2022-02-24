@@ -34,6 +34,11 @@ public class AIPathEditor : Editor
             creator.ResetY();
             SceneView.RepaintAll();
         }
+
+        if (GUILayout.Button("Lock Path")) {
+            creator.LockPath();
+            SceneView.RepaintAll();
+        }
     }
 
     void OnSceneGUI()
@@ -56,6 +61,9 @@ public class AIPathEditor : Editor
 
     void Draw()
     {
+        if(path.lockPath) { Handles.color = Color.red; }
+        else Handles.color = Color.white; ;
+
         if (!path.isClosed) {
             for (int i = 0; i < path.numPoints - 1; i++) {
                 Handles.DrawLine(path[i], path[i + 1], 4);

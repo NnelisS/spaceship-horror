@@ -25,9 +25,9 @@ public class AIFov : MonoBehaviour
         float dist = Vector3.Distance(transform.position, target.position);
         if(dist > radius) { return false; }
 
-        Vector3 dir = (target.position - transform.position).normalized;
+        Vector3 dir = (target.position - (transform.position + Vector3.up * 2)).normalized;
         if(Vector3.Angle(transform.forward, dir) < angle / 2 || dist < innerRadius) {
-            if(!Physics.Raycast(transform.position, dir, dist, obstacleMask)) {
+            if(!Physics.Raycast(transform.position + Vector3.up * 2, dir, dist, obstacleMask)) {
                 return true;
             }
         }
@@ -39,7 +39,15 @@ public class AIFov : MonoBehaviour
     {
         foreach(HideObject _object in hideObjects) {
             float dist = Vector3.Distance(transform.position, _object.transform.position);
-            if (dist < radius) { return _object; }
+            if (dist < innerRadius && _object.hidingInside) { return _object; }
+            if (dist > radius) { continue; }
+
+            Vector3 dir = (_object.transform.position - (transform.position + Vector3.up * 2)).normalized;
+            if (Vector3.Angle(transform.forward, dir) < angle / 2 || dist < innerRadius) {
+                if (!Physics.Raycast(transform.position + Vector3.up * 2, dir, dist, obstacleMask)) {
+                    return _object;
+                }
+            }
         }
 
         return null;
