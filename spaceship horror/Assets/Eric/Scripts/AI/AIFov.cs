@@ -14,10 +14,9 @@ public class AIFov : MonoBehaviour
     {
         float dist = Vector3.Distance(transform.position, target.position);
         if(dist > radius) { return false; }
-        if(dist < innerRadius) { return true; }
 
         Vector3 dir = (target.position - transform.position).normalized;
-        if(Vector3.Angle(transform.forward, dir) < angle / 2) {
+        if(Vector3.Angle(transform.forward, dir) < angle / 2 || dist < innerRadius) {
             if(!Physics.Raycast(transform.position, dir, dist, obstacleMask)) {
                 return true;
             }

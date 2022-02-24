@@ -2,8 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class AIPathing : MonoBehaviour
 {
+    [SerializeField]
+    public bool pauseMovement = false;
+
     [HideInInspector]
     public bool isPathing = true;
 
@@ -33,13 +37,16 @@ public class AIPathing : MonoBehaviour
 
     void Update()
     {
+        if(pauseMovement) { navMeshAgent.destination = transform.position; return; }
+
+
         if (currentTarget != null) {
             FollowTarget();
         }
 
         if (currentDestination != Vector3.zero) {
             navMeshAgent.destination = currentDestination;
-            if ((transform.position - currentDestination).sqrMagnitude < 2f) {
+            if ((transform.position - new Vector3(currentDestination.x, transform.position.y, currentDestination.z)).sqrMagnitude < 2f) {
                 currentDestination = Vector3.zero;  
             }
             return;
@@ -54,7 +61,7 @@ public class AIPathing : MonoBehaviour
         if (currentPath == null) { LookForClosestPath(); }
         navMeshAgent.destination = currentPath[currentPathIndex];
 
-        if ((transform.position - currentPath[currentPathIndex]).sqrMagnitude < 2f) {
+        if ((transform.position - new Vector3(currentPath[currentPathIndex].x, transform.position.y, currentPath[currentPathIndex].z)).sqrMagnitude < 2f) {
             currentPathIndex += reversePath ? -1 : 1;
 
             if (reversePath ? currentPathIndex < 0 : currentPathIndex >= currentPath.numPoints) {
