@@ -85,6 +85,9 @@ public class AI : MonoBehaviour
         if(_object == null) { return; }
         if(Random.value > 1 - chanceInProcent) {
             pathing.SetTarget( _object.transform.position + _object.transform.forward * 2);
+
+
+
         }
 
     }
