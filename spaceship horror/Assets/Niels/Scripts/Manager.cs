@@ -7,6 +7,16 @@ public class Manager : MonoBehaviour
 {
     public void StartGame()
     {
+        SceneManager.LoadScene("Cutscene");
+    }
+
+    public void Startt()
+    {
         SceneManager.LoadScene("Level 1");
+    }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene("TitleScreen");
     }
 }
