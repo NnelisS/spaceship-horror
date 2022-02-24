@@ -58,12 +58,12 @@ public class AIPathEditor : Editor
     {
         if (!path.isClosed) {
             for (int i = 0; i < path.numPoints - 1; i++) {
-                Handles.DrawLine(path[i], path[i + 1], 2);
+                Handles.DrawLine(path[i], path[i + 1], 4);
             }
         }
         else {
             for (int i = 0; i < path.numPoints; i++) {
-                Handles.DrawLine(path[i], path[i + 1], 2);
+                Handles.DrawLine(path[i], path[i + 1], 4);
             }
         }
 
@@ -71,7 +71,7 @@ public class AIPathEditor : Editor
 
         Handles.color = Color.red;
         for (int i = 0; i < path.numPoints; i++) {
-            Vector3 newPos = Handles.FreeMoveHandle(path[i], Quaternion.identity, .3f, Vector2.zero, Handles.CylinderHandleCap);
+            Vector3 newPos = Handles.FreeMoveHandle(path[i], Quaternion.identity, .5f, Vector2.zero, Handles.CylinderHandleCap);
 
             if(path[i] != newPos) {
                 Undo.RecordObject(creator, "Move Point");
