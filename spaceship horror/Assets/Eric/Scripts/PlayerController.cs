@@ -6,17 +6,21 @@ using InputHandler;
 [RequireComponent(typeof(Movement), typeof(PlayerCamera), typeof(PlayerHealth))]
 public class PlayerController : MonoBehaviour
 {
-    [HideInInspector]
-    public PlayerCamera playerCamera = null;
-    [HideInInspector]
-    public Movement movement = null;
+    PlayerCamera playerCamera = null;
+    Movement movement = null;
     [HideInInspector]
     public PlayerHealth health = null;
 
     PlayerInput controls;
     PlayerInput.MovementActions inputActions;
 
+    [SerializeField] LayerMask ignoreLayers;
+
+    public float interactRadius = 10;
     public bool hiding = false;
+    public HideObject hidingInside = null;
+
+    CapsuleCollider playerCollider;
 
 
     void Awake()
@@ -24,6 +28,7 @@ public class PlayerController : MonoBehaviour
         playerCamera = GetComponent<PlayerCamera>();
         movement = GetComponent<Movement>();
         health = GetComponent<PlayerHealth>();
+        playerCollider = GetComponent<CapsuleCollider>();
 
         #region Bind Inputs
 
@@ -45,6 +50,42 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         #endregion
+    }
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) {
+            Hide();
+        }
+    }
+
+    void Hide()
+    {
+        if (!hiding) {
+            RaycastHit hit;
+            Physics.Raycast(transform.position, playerCamera.playerCamera.transform.forward, out hit, interactRadius, ignoreLayers);
+
+            if (hit.collider != null) {
+                HideObject _object = hit.collider.gameObject.GetComponent<HideObject>();
+                if (_object != null) {
+                    hiding = true;
+                    transform.position = _object.cameraPos - new Vector3(0, playerCollider.height, 0);
+                    transform.eulerAngles = new Vector3(0, -90, 0);
+                    hidingInside = _object;
+                    _object.hidingInside = true;
+                    playerCamera.Hide();
+                    movement.Hide();
+                }
+            }
+        }
+        else {
+            movement.Hide();
+            playerCamera.Hide();
+            movement.controller.Move(transform.forward * 5);
+            hiding = false;
+            hidingInside.hidingInside = false;
+            hidingInside = null;
+        }
     }
 
 
