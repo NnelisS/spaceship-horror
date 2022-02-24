@@ -366,10 +366,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   path:
     points:
-    - {x: -7.3044195, y: 0.5, z: -1.4912422}
-    - {x: -10.506279, y: 0.5, z: 4.450153}
-    - {x: -6.8472605, y: 0.5, z: 11.555781}
-    - {x: 1.5443599, y: 0.5, z: 10.392699}
+    - {x: -12.88405, y: 0.5, z: -12.553216}
+    - {x: -17.870913, y: 0.5, z: 5.5620933}
+    - {x: -10.025765, y: 0.5, z: 14.480389}
+    - {x: -0.28143883, y: 0.5, z: 17.295698}
+    - {x: 9.805584, y: 0, z: 15.601309}
     isClosed: 0
     freezeY: 0
 --- !u!1 &588547939
@@ -383,8 +384,8 @@ GameObject:
   - component: {fileID: 588547942}
   - component: {fileID: 588547940}
   - component: {fileID: 588547941}
-  - component: {fileID: 588547943}
   - component: {fileID: 588547944}
+  - component: {fileID: 588547943}
   m_Layer: 0
   m_Name: AI
   m_TagString: Untagged
@@ -402,7 +403,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3
+  m_Speed: 0
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -426,9 +427,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c20a34dbbec232a44ba5fb1cbe8f89aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1036848751}
-  aggroTime: 4
-  aggro: 0
+  player: {fileID: 1036848753}
+  state: 0
+  normalSpeed: 4
+  chasingSpeed: 8
+  searchTime: 10
+  searchAreaSize: 4
 --- !u!4 &588547942
 Transform:
   m_ObjectHideFlags: 0
@@ -456,8 +460,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcffb7f88e3f12a4881ed00ae23fbbc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  paths: []
-  reversePath: 0
+  isPathing: 1
+  currentDestination: {x: 0, y: 0, z: 0}
 --- !u!114 &588547944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,8 +474,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a7fc61db26fcb34e8ea01adc2fcd984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angle: 107
-  radius: 47.4
+  angle: 105
+  radius: 22.64
+  innerRadius: 7.3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 8192
@@ -583,6 +588,7 @@ GameObject:
   - component: {fileID: 1036848753}
   - component: {fileID: 1036848752}
   - component: {fileID: 1036848750}
+  - component: {fileID: 1036848754}
   - component: {fileID: 1036848749}
   m_Layer: 0
   m_Name: Player
@@ -671,6 +677,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1036848752}
   movement: {fileID: 1036848750}
+  hiding: 0
+--- !u!114 &1036848754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036848748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11b824d85416c944cb4c628e2f886322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
 --- !u!1 &1071428490
 GameObject:
   m_ObjectHideFlags: 0

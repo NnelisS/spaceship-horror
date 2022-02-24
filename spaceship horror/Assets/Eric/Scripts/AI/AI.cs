@@ -1,18 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 
 [RequireComponent(typeof(AIPathing), typeof(AIFov))]
 public class AI : MonoBehaviour
 {
-    [SerializeField] Transform player;
+    [SerializeField] PlayerController player;
     AIPathing pathing;
     AIFov fov;
 
-    [Header("Aggro Behavior")]
-    public float aggroTime = 1.0f;
-    public bool aggro = false;
+    [SerializeField] States state = States.Roaming;
+
+    [Header("Enemy attributes")]
+    [SerializeField] float normalSpeed;
+    [SerializeField] float chasingSpeed;
+
+    [Header("Search Behavior")]
+    [SerializeField] float searchTime = 1.0f;
+    [SerializeField] public float searchAreaSize = 10f;
 
     void Awake()
     {
@@ -20,37 +24,73 @@ public class AI : MonoBehaviour
         fov = GetComponent<AIFov>();
     }
 
+    void Start()
+    {
+        pathing.SetSpeed(normalSpeed);
+    }
+
     void Update()
     {
-        if (fov.TargetInView(player) && !aggro) {
-            Aggro(true);
-        } else if (!fov.TargetInView(player) && aggro){
-            Aggro(false);
+
+        if (state != States.Chasing) {
+            if (fov.TargetInView(player.transform)) {
+                StopAllCoroutines();
+                state = States.Chasing;
+                pathing.SetSpeed(chasingSpeed);
+                pathing.SetTarget(player.transform);
+            }
         }
+
+        if (state == States.Chasing) {
+            if (!fov.TargetInView(player.transform)) {
+                state = States.Searching;
+                StartCoroutine(Searching(player.transform.position));
+                pathing.SetTarget(null);
+            }
+        }
+
     }
 
-    void Aggro(bool setAggro)
+
+    IEnumerator Searching(Vector3 searchArea)
     {
-        if (setAggro) {
-            aggro = true;
-            pathing.SetTarget(player);
-            StopAllCoroutines();
-        }
-        else
-            StartCoroutine(AggroRoutine());
+        pathing.isPathing = false;
+        StartCoroutine(NewSearchPos(searchArea));
+        yield return new WaitForSeconds(searchTime);
+        StopAllCoroutines();
+        state = States.Roaming;
+        pathing.isPathing = true;
     }
 
-    IEnumerator AggroRoutine()
+    IEnumerator NewSearchPos(Vector3 searchArea)
     {
-        yield return new WaitForSeconds(aggroTime);
-        aggro = false;
-        pathing.SetTarget(null);
+        if (pathing.hasDestination) { yield return null; }
+        else {
+            pathing.SetSpeed(normalSpeed);
+            yield return new WaitForSeconds(Random.Range(0.75f, 1.5f));
+            pathing.SetTarget(searchArea + Random.insideUnitSphere * searchAreaSize);
+        }
+        StartCoroutine(NewSearchPos(searchArea));
     }
+
+
+
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        if (aggro) { Gizmos.DrawLine(transform.position, player.position); }
+        if (state == States.Chasing) { Gizmos.DrawLine(transform.position, player.transform.position); }
+
+        if (pathing != null && pathing.hasDestination)
+            Gizmos.DrawWireSphere(pathing.currentDestination, 1f);
     }
 
+    enum States
+    {
+        Roaming,
+        Searching,
+        Chasing
+    }
 }
+
+

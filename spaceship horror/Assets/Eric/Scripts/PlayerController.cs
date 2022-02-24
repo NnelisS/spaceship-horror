@@ -12,8 +12,13 @@ public class PlayerController : MonoBehaviour
     PlayerInput controls;
     PlayerInput.MovementActions inputActions;
 
+    public bool hiding = false;
+
+
     void Awake()
     {
+        #region Bind Inputs
+
         controls = new PlayerInput();
         inputActions = controls.Movement;
         
@@ -31,6 +36,7 @@ public class PlayerController : MonoBehaviour
         inputActions.VerticalMovement.canceled += ctx => movement.UpdateVertical(ctx.ReadValue<float>());
         #endregion
 
+        #endregion
     }
 
 

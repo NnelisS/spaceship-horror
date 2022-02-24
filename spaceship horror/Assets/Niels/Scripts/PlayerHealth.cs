@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
 
     void Update()
     {
-        healthBar.value = currentHealth;
+        //healthBar.value = currentHealth;
     }
 
     public void TakeDamage(float damage)
