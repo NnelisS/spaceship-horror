@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1316866997144943409}
   - component: {fileID: 2731899486305350804}
   - component: {fileID: 147879169124827230}
+  - component: {fileID: 5355615156515812545}
   m_Layer: 0
   m_Name: Fire_thing
   m_TagString: Untagged
@@ -83,3 +84,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &5355615156515812545
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805278392471396747}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 2673863220330038126, guid: efb3cf9d97bf47f4bab4aadb8dbfafa9, type: 3}
