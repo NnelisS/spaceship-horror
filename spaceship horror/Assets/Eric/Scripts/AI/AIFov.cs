@@ -19,7 +19,12 @@ public class AIFov : MonoBehaviour
         }
     }
 
-
+    public bool TargetOutOfRange(Transform target)
+    {
+        float dist = Vector3.Distance(transform.position, target.position);
+        if (dist > radius) { return true; }
+        else { return false; }
+    }
     public bool TargetInView(Transform target)
     {
         float dist = Vector3.Distance(transform.position, target.position);

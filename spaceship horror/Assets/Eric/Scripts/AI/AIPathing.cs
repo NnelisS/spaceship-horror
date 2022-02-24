@@ -51,7 +51,7 @@ public class AIPathing : MonoBehaviour
 
         if (currentDestination != Vector3.zero) {
             navMeshAgent.destination = currentDestination;
-            if ((transform.position - new Vector3(currentDestination.x, transform.position.y, currentDestination.z)).sqrMagnitude < 2f) {
+            if ((transform.position - new Vector3(currentDestination.x, transform.position.y, currentDestination.z)).sqrMagnitude < 10f) {
 
                 if(destinationList.Count == 0 && reachedDestinationEvent != null) { 
                     destinationList.Clear();  
@@ -78,7 +78,7 @@ public class AIPathing : MonoBehaviour
         if (currentPath == null) { LookForClosestPath(); }
         navMeshAgent.destination = currentPath[currentPathIndex];
 
-        if ((transform.position - new Vector3(currentPath[currentPathIndex].x, transform.position.y, currentPath[currentPathIndex].z)).sqrMagnitude < 2f) {
+        if ((transform.position - new Vector3(currentPath[currentPathIndex].x, transform.position.y, currentPath[currentPathIndex].z)).sqrMagnitude < 10f) {
             currentPathIndex += reversePath ? -1 : 1;
 
             if (reversePath ? currentPathIndex < 0 : currentPathIndex >= currentPath.numPoints) {

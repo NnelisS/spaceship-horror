@@ -24,6 +24,7 @@ public class AI : MonoBehaviour
     [Header("Enemy speed")]
     [SerializeField] float normalSpeed = 8;
     [SerializeField] float chasingSpeed = 10;
+    [SerializeField] float outSideRange = 50;
 
     [Header("Search Behavior")]
     [SerializeField] float searchTime = 1.0f;
@@ -64,6 +65,11 @@ public class AI : MonoBehaviour
                 pathing.SetSpeed(chasingSpeed);
                 pathing.SetTarget(player.transform);
                 searchingObject = null;
+            }else if (fov.TargetOutOfRange(player.transform)) {
+                pathing.SetSpeed(outSideRange);
+            }
+            else {
+                pathing.SetSpeed(normalSpeed);
             }
             //SearchObject(fov.HideObjectInView(), 0.25f);
         }

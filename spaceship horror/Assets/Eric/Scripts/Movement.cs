@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
@@ -18,6 +19,9 @@ public class Movement : MonoBehaviour
     [Header("Movement smoothing")]
     [SerializeField, Range(0.0f, 0.5f)] float smoothTime = 0.3f;
 
+    [Header("Other")]
+    [SerializeField] Slider slider;
+
     Vector2 targetDir = Vector2.zero;
     Vector2 currentDir = Vector2.zero;
     Vector2 currentDirVelocity = Vector2.zero;
@@ -28,6 +32,9 @@ public class Movement : MonoBehaviour
 
     public CharacterController controller;
 
+    float runTimer = 100f;
+
+
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -35,13 +42,22 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
-        if(disableMovement) { return; }
+        if (runTimer <= 0) { isSprinting = false; }
+        if (isSprinting && runTimer > 0) { runTimer -= Time.deltaTime * 10; }
+        else if (runTimer < 100 && !isSprinting) { runTimer += Time.deltaTime * 7.5f; }
+
+        slider.value = runTimer / 100;
+
+        if (disableMovement) { return; }
 
         float speed = isSprinting ? moveSpeed * sprintMultiplier : moveSpeed;
 
         if (targetDir != Vector2.zero) {
             walk.enabled = !isSprinting;
             run.enabled = isSprinting;
+        } else {
+            walk.enabled = false;
+            run.enabled = false;
         }
 
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, smoothTime);
