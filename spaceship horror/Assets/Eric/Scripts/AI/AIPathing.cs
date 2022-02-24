@@ -2,8 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class AIPathing : MonoBehaviour
 {
+    [SerializeField]
+    public bool pauseMovement = false;
+
     [HideInInspector]
     public bool isPathing = true;
 
@@ -33,6 +37,9 @@ public class AIPathing : MonoBehaviour
 
     void Update()
     {
+        if(pauseMovement) { navMeshAgent.destination = transform.position; return; }
+
+
         if (currentTarget != null) {
             FollowTarget();
         }

@@ -25,7 +25,7 @@ public class AIPathEditor : Editor
         }
 
         if(GUILayout.Button("Bake points")) {
-            creator.ResetY();
+           // creator.ResetY();
             creator.UpdatePoints();
             SceneView.RepaintAll();
         }

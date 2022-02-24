@@ -16,10 +16,9 @@ public class AIFovEditor : Editor
         Handles.color = Color.white;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.radius);
 
-        Handles.color = Color.red;
+        Handles.color = Color.yellow;
         Handles.DrawWireArc(fov.transform.position, Vector3.up, Vector3.forward, 360, fov.innerRadius);
 
-        Handles.color = Color.yellow;
         Vector3 viewAngleA = fov.DirFromAngle(-fov.angle / 2);
         Vector3 viewAngleB = fov.DirFromAngle(fov.angle / 2);
         Handles.DrawLine(fov.transform.position, fov.transform.position + viewAngleA * fov.radius);

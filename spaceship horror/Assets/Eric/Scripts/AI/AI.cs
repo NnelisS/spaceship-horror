@@ -10,13 +10,24 @@ public class AI : MonoBehaviour
 
     [SerializeField] States state = States.Roaming;
 
-    [Header("Enemy attributes")]
+    [Header("Pause pathing or Movement")]
+    [SerializeField] bool pauseMovement = false;
+    [SerializeField] bool pausePathing = false;
+
+    [Header("Attack Behavior")]
+    [SerializeField] float attackRadius;
+    [SerializeField] float attackCoolDown;
+
+    [Header("Enemy speed")]
     [SerializeField] float normalSpeed;
     [SerializeField] float chasingSpeed;
 
     [Header("Search Behavior")]
     [SerializeField] float searchTime = 1.0f;
     [SerializeField] public float searchAreaSize = 10f;
+
+
+    float attackTimer = 0.0f;
 
     void Awake()
     {
@@ -31,6 +42,9 @@ public class AI : MonoBehaviour
 
     void Update()
     {
+        pathing.pauseMovement = pauseMovement;
+        pathing.isPathing = !pausePathing;
+
 
         if (state != States.Chasing) {
             if (fov.TargetInView(player.transform)) {
@@ -44,9 +58,17 @@ public class AI : MonoBehaviour
         if (state == States.Chasing) {
             if (!fov.TargetInView(player.transform)) {
                 state = States.Searching;
-                StartCoroutine(Searching(player.transform.position));
-                pathing.SetTarget(null);
             }
+            attackTimer += Time.deltaTime;
+            if(Vector3.Distance(transform.position, player.transform.position) < attackRadius && attackTimer >= attackCoolDown) {
+                player.health.TakeDamage(34);
+                attackTimer = 0.0f;
+            }
+        }
+
+        if(state == States.Searching) {
+            StartCoroutine(Searching(player.transform.position));
+            pathing.SetTarget(null);
         }
 
     }
@@ -79,6 +101,7 @@ public class AI : MonoBehaviour
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackRadius);
         if (state == States.Chasing) { Gizmos.DrawLine(transform.position, player.transform.position); }
 
         if (pathing != null && pathing.hasDestination)

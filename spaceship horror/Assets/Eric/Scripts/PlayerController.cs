@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using InputHandler;
 
-[RequireComponent(typeof(Movement), typeof(PlayerCamera))]
+[RequireComponent(typeof(Movement), typeof(PlayerCamera), typeof(PlayerHealth))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] PlayerCamera playerCamera = null;
-    [SerializeField] Movement movement = null;
+    [HideInInspector]
+    public PlayerCamera playerCamera = null;
+    [HideInInspector]
+    public Movement movement = null;
+    [HideInInspector]
+    public PlayerHealth health = null;
 
     PlayerInput controls;
     PlayerInput.MovementActions inputActions;
@@ -17,6 +21,10 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        playerCamera = GetComponent<PlayerCamera>();
+        movement = GetComponent<Movement>();
+        health = GetComponent<PlayerHealth>();
+
         #region Bind Inputs
 
         controls = new PlayerInput();
