@@ -123,16 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &27953254 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5274345044107958502, guid: 690b17dca12547a4f9485e2f3aba5c3f, type: 3}
-  m_PrefabInstance: {fileID: 712840530}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &27953257 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 258156828854233404, guid: 690b17dca12547a4f9485e2f3aba5c3f, type: 3}
-  m_PrefabInstance: {fileID: 712840530}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &127947614 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1291411145449291428, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
@@ -503,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a18df693f3c87a849a5e3ada878414e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 27953254}
+  playerCamera: {fileID: 0}
   mouseSensitivity: 0.1
   smoothTime: 0.03
 --- !u!114 &468785913
@@ -552,8 +542,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radarCanvas: {fileID: 1716812805}
   informationCanvas: {fileID: 401010113}
-  cameraOne: {fileID: 27953257}
+  cameraOne: {fileID: 0}
   cameraTwo: {fileID: 729825054}
+  camera: {fileID: 0}
 --- !u!114 &468785916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -865,7 +856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3767802876013806451, guid: 690b17dca12547a4f9485e2f3aba5c3f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5274345044107958502, guid: 690b17dca12547a4f9485e2f3aba5c3f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3520,6 +3511,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1291411144594534595, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291411145139307942, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1291411145176547384, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -3607,6 +3606,18 @@ PrefabInstance:
     - target: {fileID: 1291411145176547387, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291411145291312374, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291411145449291428, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1291411145848996935, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a5b77547790c3594e8f40c1f59c38ae3, type: 3}
