@@ -12,6 +12,10 @@ public class PhoneRadar : MonoBehaviour
     public Camera cameraOne;
     public Camera cameraTwo;
 
+    public GameObject camera;
+
+    private Movement playerMovement;
+
     private bool inOut = false;
     private bool usable = true;
     private float timer = 2.75f;
@@ -19,6 +23,8 @@ public class PhoneRadar : MonoBehaviour
 
     private void Start()
     {
+        playerMovement = GetComponent<Movement>();
+
         radarCanvas.SetActive(false);
         inOut = false;
         cameraTwo.enabled = false;
@@ -33,10 +39,10 @@ public class PhoneRadar : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    Debug.Log("In");
                     phone.Play("Phone Flip In");
                     cameraTwo.enabled = !cameraTwo.enabled;
                     cameraOne.enabled = !cameraOne.enabled;
+                    playerMovement.enabled = true;
                     radarCanvas.SetActive(false);
                     informationCanvas.SetActive(true);
                     usable = false;
@@ -47,7 +53,8 @@ public class PhoneRadar : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Q))
                 {
-                    Debug.Log("Out");
+                    camera.transform.rotation = Quaternion.Euler(0, transform.rotation.y, transform.rotation.z);
+                    playerMovement.enabled = false;
                     phone.Play("Phone Flip Out");
                     StartCoroutine(OpenRader());
                     usable = false;
