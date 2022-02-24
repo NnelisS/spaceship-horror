@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 0}
+  ping: {fileID: 0}
 --- !u!1 &7888103811584231403
 GameObject:
   m_ObjectHideFlags: 0
