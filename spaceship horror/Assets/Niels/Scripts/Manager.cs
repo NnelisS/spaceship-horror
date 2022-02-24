@@ -5,6 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Manager : MonoBehaviour
 {
+    private void Update()
+    {
+        Cursor.lockState = CursorLockMode.None;
+    }
+
     public void StartGame()
     {
         SceneManager.LoadScene("Cutscene");

@@ -11796,6 +11796,7 @@ MonoBehaviour:
     - {x: -33.068832, y: -0.03125, z: -105.81336}
     isClosed: 0
     freezeY: 0
+    lockPath: 0
 --- !u!1 &282611211
 GameObject:
   m_ObjectHideFlags: 0
