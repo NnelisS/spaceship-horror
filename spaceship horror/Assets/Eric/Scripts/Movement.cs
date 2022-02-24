@@ -11,6 +11,10 @@ public class Movement : MonoBehaviour
     [SerializeField] float jumpForce = 5;
     [SerializeField] float gravity = -9.81f;
 
+    [Header("Audio sources")]
+    [SerializeField] AudioSource walk;
+    [SerializeField] AudioSource run;
+
     [Header("Movement smoothing")]
     [SerializeField, Range(0.0f, 0.5f)] float smoothTime = 0.3f;
 

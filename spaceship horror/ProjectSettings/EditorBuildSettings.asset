@@ -9,6 +9,15 @@ EditorBuildSettings:
     path: Assets/Niels/Scenes/TitleScreen.unity
     guid: eb394ed1da24e2f4996512b5d916e13d
   - enabled: 1
+    path: Assets/Niels/Scenes/Cutscene.unity
+    guid: a6e2b4784942cbb45a8263b7add60a54
+  - enabled: 1
     path: Assets/Luca/Scenes/level 1.unity
     guid: 7a6f4bacb0db54b49b7c6579fdd1099e
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouLose.unity
+    guid: 4d811f06fe6648146897f7c9df4a3a36
+  - enabled: 1
+    path: Assets/Niels/Scenes/YouWin.unity
+    guid: 5489d42b2171cdb4e8d98e10fdf3cb4a
   m_configObjects: {}

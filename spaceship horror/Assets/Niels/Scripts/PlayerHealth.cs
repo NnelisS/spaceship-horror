@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -18,6 +19,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if(healthBar == null) { return; }
         healthBar.value = currentHealth;
+
+        if (currentHealth <= 0)
+        {
+            SceneManager.LoadScene("YouLose");
+        }
     }
 
     public void TakeDamage(float damage)
