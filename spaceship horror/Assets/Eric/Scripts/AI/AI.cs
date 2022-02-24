@@ -165,7 +165,7 @@ public class AI : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && attackTimer >= attackCoolDown && state == States.Chasing) {
+        if (other.CompareTag("Player") && attackTimer >= attackCoolDown && state == States.Chasing && !player.hiding) {
             player.health.TakeDamage(34);
             attackTimer = 0.0f;
         }
