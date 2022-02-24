@@ -32,6 +32,9 @@ public class AI : MonoBehaviour
     float attackTimer = 0.0f;
     HideObject searchingObject = null;
 
+    float screamCoolDownTime = 10f;
+    bool screamOnCoolDown = false;
+
 
     void Awake()
     {
@@ -102,6 +105,11 @@ public class AI : MonoBehaviour
 
     }
 
+    void Scream()
+    {
+
+    }
+
     void OpenObject()
     {
         if(searchingObject.openObject()) { player.Hide(); }
@@ -117,6 +125,7 @@ public class AI : MonoBehaviour
         pausePathing = false;
         pathing.SetSpeed(normalSpeed);
     }
+
 
     IEnumerator Searching(Vector3 searchArea)
     {
