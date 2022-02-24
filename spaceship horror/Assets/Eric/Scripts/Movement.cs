@@ -19,9 +19,10 @@ public class Movement : MonoBehaviour
     Vector2 currentDirVelocity = Vector2.zero;
     float velocityY;
 
+    bool disableMovement = false;
     bool isSprinting = false;
 
-    CharacterController controller;
+    public CharacterController controller;
 
     void Start()
     {
@@ -30,6 +31,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        if(disableMovement) { return; }
+
         float speed = isSprinting ? moveSpeed * sprintMultiplier : moveSpeed;
 
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, smoothTime);
@@ -58,6 +61,11 @@ public class Movement : MonoBehaviour
     {
         if(!controller.isGrounded) { return; }
         velocityY += jumpForce;
+    }
+
+    public void Hide()
+    {
+        disableMovement = !disableMovement;
     }
 
     public void Sprint(bool check)

@@ -7,6 +7,7 @@ public class AI : MonoBehaviour
     [SerializeField] PlayerController player;
     AIPathing pathing;
     AIFov fov;
+    CapsuleCollider _collider;
 
     [SerializeField] States state = States.Roaming;
 
@@ -32,6 +33,7 @@ public class AI : MonoBehaviour
     {
         pathing = GetComponent<AIPathing>();
         fov = GetComponent<AIFov>();
+        _collider = GetComponentInChildren<CapsuleCollider>();
     }
 
     void Start()
@@ -46,46 +48,89 @@ public class AI : MonoBehaviour
 
 
         if (state != States.Chasing) {
-            if (fov.TargetInView(player.transform)) {
+            if (fov.TargetInView(player.transform) && !player.hiding) {
                 StopAllCoroutines();
                 state = States.Chasing;
                 pathing.SetSpeed(chasingSpeed);
                 pathing.SetTarget(player.transform);
             }
+            //SearchObject(fov.HideObjectInView(), 0.25f);
         }
 
         if (state == States.Chasing) {
-            if (!fov.TargetInView(player.transform)) {
+            if (!fov.TargetInView(player.transform) || player.hiding) {
                 state = States.Searching;
+                pausePathing = true;
+
+                if (fov.HideObjectInView().hidingInside) {
+                    SearchObject(fov.HideObjectInView(), 1f);
+                    Debug.Log("?");
+                }
+                else {
+                    pathing.SetTarget(player.transform.position);
+                }
+                StartCoroutine(Searching(player.transform.position));
             }
             attackTimer += Time.deltaTime;
         }
 
         if(state == States.Searching) {
-            StartCoroutine(Searching(player.transform.position));
-            pathing.SetTarget(null);
+            
+        }
+
+    }
+
+    void SearchObject(HideObject _object, float chanceInProcent)
+    {
+        if(_object == null) { return; }
+        if(Random.value > 1 - chanceInProcent) {
+            pathing.SetTarget( _object.transform.position + _object.transform.forward * 2);
+
+
+
         }
 
     }
 
 
+    void StopSearching()
+    {
+        state = States.Roaming;
+        pausePathing = false;
+        pathing.SetSpeed(normalSpeed);
+    }
+
     IEnumerator Searching(Vector3 searchArea)
     {
-        pathing.isPathing = false;
+        searchArea.y = transform.position.y;
         StartCoroutine(NewSearchPos(searchArea));
         yield return new WaitForSeconds(searchTime);
-        StopAllCoroutines();
-        state = States.Roaming;
-        pathing.isPathing = true;
+        StopSearching();
     }
 
     IEnumerator NewSearchPos(Vector3 searchArea)
     {
         if (pathing.hasDestination) { yield return null; }
         else {
-            pathing.SetSpeed(normalSpeed);
-            yield return new WaitForSeconds(Random.Range(0.75f, 1.5f));
-            pathing.SetTarget(searchArea + Random.insideUnitSphere * searchAreaSize);
+            yield return new WaitForSeconds(Random.Range(0.75f, 1f));
+            SearchObject(fov.HideObjectInView(), 0.25f);
+
+            Vector3 dir = (Random.insideUnitSphere * searchAreaSize);
+            dir.y = searchArea.y;
+            float dst = Vector3.Distance(searchArea, searchArea + dir.normalized);
+
+            Debug.DrawRay(searchArea, dir * dst, Color.red, 2f);
+
+            RaycastHit hit;
+            Physics.Raycast(searchArea, dir, out hit, dst);
+
+            if(hit.collider != null) {
+                pathing.SetTarget(hit.point);
+            }
+            else {
+                pathing.SetTarget(searchArea + dir);
+            }
+
         }
         StartCoroutine(NewSearchPos(searchArea));
     }
