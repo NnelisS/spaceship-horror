@@ -8,7 +8,7 @@ public class AIPathing : MonoBehaviour
     [SerializeField]
     public bool pauseMovement = false;
 
-    [HideInInspector]
+    
     public bool isPathing = true;
 
     List<AIPath> paths;
@@ -37,7 +37,7 @@ public class AIPathing : MonoBehaviour
 
     void Update()
     {
-        if(pauseMovement) { navMeshAgent.destination = transform.position; return; }
+        if(pauseMovement) { navMeshAgent.destination = transform.position; currentPath = null; return; }
 
 
         if (currentTarget != null) {
@@ -107,7 +107,7 @@ public class AIPathing : MonoBehaviour
     {
         currentPath = null;
         currentTarget = null;
-        currentDestination = new Vector3(target.x, transform.position.y, target.z);
+        currentDestination = new Vector3(target.x, target.y, target.z);
     }
 
     public void SetSpeed(float speed)
