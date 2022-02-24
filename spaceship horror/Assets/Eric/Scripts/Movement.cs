@@ -39,6 +39,11 @@ public class Movement : MonoBehaviour
 
         float speed = isSprinting ? moveSpeed * sprintMultiplier : moveSpeed;
 
+        if (targetDir != Vector2.zero) {
+            walk.enabled = !isSprinting;
+            run.enabled = isSprinting;
+        }
+
         currentDir = Vector2.SmoothDamp(currentDir, targetDir, ref currentDirVelocity, smoothTime);
 
         if (controller.isGrounded && velocityY < 0) { velocityY = 0; }
