@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(AIPathing), typeof(AIFov))]
+[RequireComponent(typeof(AIPathing), typeof(AIFov), typeof(SphereCollider))]
 public class AI : MonoBehaviour
 {
     [SerializeField] PlayerController player;
@@ -15,12 +15,11 @@ public class AI : MonoBehaviour
     [SerializeField] bool pausePathing = false;
 
     [Header("Attack Behavior")]
-    [SerializeField] float attackRadius;
-    [SerializeField] float attackCoolDown;
+    [SerializeField] float attackCoolDown = 1;
 
     [Header("Enemy speed")]
-    [SerializeField] float normalSpeed;
-    [SerializeField] float chasingSpeed;
+    [SerializeField] float normalSpeed = 8;
+    [SerializeField] float chasingSpeed = 10;
 
     [Header("Search Behavior")]
     [SerializeField] float searchTime = 1.0f;
@@ -60,10 +59,6 @@ public class AI : MonoBehaviour
                 state = States.Searching;
             }
             attackTimer += Time.deltaTime;
-            if(Vector3.Distance(transform.position, player.transform.position) < attackRadius && attackTimer >= attackCoolDown) {
-                player.health.TakeDamage(34);
-                attackTimer = 0.0f;
-            }
         }
 
         if(state == States.Searching) {
@@ -95,13 +90,19 @@ public class AI : MonoBehaviour
         StartCoroutine(NewSearchPos(searchArea));
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player") && attackTimer >= attackCoolDown && state == States.Chasing) {
+            player.health.TakeDamage(34);
+            attackTimer = 0.0f;
+        }
+    }
 
 
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRadius);
         if (state == States.Chasing) { Gizmos.DrawLine(transform.position, player.transform.position); }
 
         if (pathing != null && pathing.hasDestination)
