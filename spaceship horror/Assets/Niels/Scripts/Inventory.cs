@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Inventory : MonoBehaviour
 {
@@ -16,8 +17,12 @@ public class Inventory : MonoBehaviour
     }
 
     private void Update()
-    {        
+    {
         //Debug.Log(items.Count);
+        if (items.Count >= 5)
+        {
+            SceneManager.LoadScene("YouWin");
+        }
     }
 
     public void UpdateUI()
