@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AIPathing), typeof(AIFov), typeof(SphereCollider))]
+[RequireComponent(typeof(AIPathing), typeof(AIFov), typeof(CapsuleCollider))]
 public class AI : MonoBehaviour
 {
     [SerializeField] PlayerController player;
@@ -47,7 +47,6 @@ public class AI : MonoBehaviour
 
     void Update()
     {
-        Debug.Log((int)state);
 
         pathing.pauseMovement = pauseMovement;
         pathing.isPathing = !pausePathing;
@@ -61,6 +60,7 @@ public class AI : MonoBehaviour
                 animator.SetInteger("state", (int)state);
                 pathing.SetSpeed(chasingSpeed);
                 pathing.SetTarget(player.transform);
+                searchingObject = null;
             }
             //SearchObject(fov.HideObjectInView(), 0.25f);
         }
@@ -71,7 +71,7 @@ public class AI : MonoBehaviour
                 animator.SetInteger("state", (int)state);
                 pausePathing = true;
 
-                if (fov.HideObjectInView().hidingInside) {
+                if (fov.HideObjectInView() != null) {
                     SearchObject(fov.HideObjectInView(), 1f);
                 }
                 else {
@@ -96,7 +96,7 @@ public class AI : MonoBehaviour
             animator.SetInteger("state", (int)state);
             pathing.SetTarget(null);
             searchingObject = _object;
-            List<Vector3> targetList = new List<Vector3> { _object.transform.position + _object.transform.forward * 10 , _object.transform.position + _object.transform.forward * 4 };
+            List<Vector3> targetList = new List<Vector3> { _object.transform.position + _object.transform.forward * 5 , _object.transform.position + _object.transform.forward * 4 };
             pathing.SetMultipleTarget(targetList, OpenObject);
         }
 
@@ -112,6 +112,7 @@ public class AI : MonoBehaviour
     void StopSearching()
     {
         state = States.Roaming;
+        StopAllCoroutines();
         animator.SetInteger("state", (int)state);
         pausePathing = false;
         pathing.SetSpeed(normalSpeed);
@@ -167,7 +168,7 @@ public class AI : MonoBehaviour
         if (state == States.Chasing) { Gizmos.DrawLine(transform.position, player.transform.position); }
 
         if (pathing != null && pathing.hasDestination)
-            Gizmos.DrawWireSphere(pathing.currentDestination, 1f);
+            Gizmos.DrawWireSphere(pathing.currentDestination, 3f);
     }
 
     enum States

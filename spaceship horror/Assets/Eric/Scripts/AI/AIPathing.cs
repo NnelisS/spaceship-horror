@@ -118,6 +118,8 @@ public class AIPathing : MonoBehaviour
         currentPath = null;
         currentTarget = target;
         currentDestination = Vector3.zero;
+        destinationList.Clear();
+        reachedDestinationEvent = null;
     }
 
     public void SetTarget(Vector3 target)
@@ -125,6 +127,8 @@ public class AIPathing : MonoBehaviour
         currentPath = null;
         currentTarget = null;
         currentDestination = new Vector3(target.x, target.y, target.z);
+        destinationList.Clear();
+        reachedDestinationEvent = null;
     }
 
     public void SetMultipleTarget(List<Vector3> targets, onReachedDestination reachedDestination)

@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     public bool hiding = false;
     public HideObject hidingInside = null;
 
-    CapsuleCollider playerCollider;
+    CharacterController characterController;
 
 
     void Awake()
@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         playerCamera = GetComponent<PlayerCamera>();
         movement = GetComponent<Movement>();
         health = GetComponent<PlayerHealth>();
-        playerCollider = GetComponent<CapsuleCollider>();
+        characterController = GetComponent<CharacterController>();
 
         #region Bind Inputs
 
@@ -63,14 +63,14 @@ public class PlayerController : MonoBehaviour
     {
         if (!hiding) {
             RaycastHit hit;
-            Physics.Raycast(transform.position + new Vector3(0, playerCollider.height, 0), playerCamera.playerCamera.transform.forward, out hit, interactRadius, ignoreLayers);
+            Physics.Raycast(transform.position + new Vector3(0, characterController.height, 0), playerCamera.playerCamera.transform.forward, out hit, interactRadius, ignoreLayers);
 
             if (hit.collider != null) {
                 HideObject _object = hit.collider.gameObject.GetComponent<HideObject>();
                 if (_object != null) {
                     hiding = true;
-                    transform.position = _object.cameraPos - new Vector3(0, playerCollider.height, 0) * 2;
-                    transform.eulerAngles = new Vector3(0, -90, 0);
+                    transform.position = _object.cameraPos - new Vector3(0, characterController.height, 0) * 2;
+                    transform.eulerAngles = new Vector3(0, _object.transform.eulerAngles.y, 0);
                     hidingInside = _object;
                     _object.hidingInside = true;
                     playerCamera.Hide();

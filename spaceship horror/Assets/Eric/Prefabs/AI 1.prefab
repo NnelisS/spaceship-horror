@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 3232380954696410677}
   - component: {fileID: 3232380954696410680}
   - component: {fileID: 3232380954696410679}
-  - component: {fileID: 1131969063076920303}
   m_Layer: 0
   m_Name: AI 1
   m_TagString: Untagged
@@ -114,19 +113,6 @@ MonoBehaviour:
   pauseMovement: 0
   isPathing: 0
   currentDestination: {x: 0, y: 0, z: 0}
---- !u!135 &1131969063076920303
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3232380954696410675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4188584908881497942
 PrefabInstance:
   m_ObjectHideFlags: 0

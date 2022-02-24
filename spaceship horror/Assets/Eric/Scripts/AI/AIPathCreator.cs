@@ -10,6 +10,7 @@ public class AIPathCreator : MonoBehaviour
     [HideInInspector]
     public AIPath path;
 
+
     void Start()
     {
         //ResetY();
@@ -37,6 +38,11 @@ public class AIPathCreator : MonoBehaviour
             if(hit.point != null)
                 path.UpdateY(i, hit.point.y);
         }
+    }
+
+    public void LockPath()
+    {
+        path.lockPath = !path.lockPath;
     }
 
 
