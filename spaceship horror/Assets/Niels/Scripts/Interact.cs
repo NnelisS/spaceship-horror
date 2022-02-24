@@ -5,9 +5,11 @@ using UnityEngine;
 public class Interact : MonoBehaviour
 {
     public Inventory inventory;
+    public AudioSource ping;
 
     private void OnMouseDown()
     {
+        ping.Play();
         inventory.items.Add(this.gameObject);
         inventory.UpdateUI();
         gameObject.SetActive(false);
