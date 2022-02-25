@@ -12,6 +12,7 @@ public class AIPathing : MonoBehaviour
     public bool isPathing = true;
 
     List<AIPath> paths;
+    public List<AIPath> recentPaths = new List<AIPath>();
     NavMeshAgent navMeshAgent;
 
     public bool hasDestination { get { return (currentDestination != Vector3.zero); } }
@@ -89,11 +90,14 @@ public class AIPathing : MonoBehaviour
 
     void LookForClosestPath()
     {
+        recentPaths.Add(currentPath);
+
         AIPath closest = currentPath;
         int closestIndex = 0;
 
         foreach (AIPath path in paths) {
             if (path == currentPath) { continue; }
+            if (recentPaths.Contains(path)) { continue; }
             if (closest == currentPath) { closest = path; continue; }
 
             if ((transform.position - path.centroid).sqrMagnitude < (transform.position - closest.centroid).sqrMagnitude) {
@@ -105,6 +109,10 @@ public class AIPathing : MonoBehaviour
             if ((transform.position - closest[i]).sqrMagnitude < (transform.position - closest[closestIndex]).sqrMagnitude) {
                 closestIndex = i;
             }
+        }
+
+        if(recentPaths.Count > 5) {
+            recentPaths.RemoveAt(0);
         }
 
         reversePath = (closestIndex >= closest.numPoints / 2) ? true : false;

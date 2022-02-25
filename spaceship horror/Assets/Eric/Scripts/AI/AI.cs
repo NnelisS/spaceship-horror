@@ -7,6 +7,7 @@ public class AI : MonoBehaviour
 {
     [SerializeField] PlayerController player;
     [SerializeField] Animator animator;
+    [SerializeField] AudioSource scream;
 
     AIPathing pathing;
     AIFov fov;
@@ -60,6 +61,7 @@ public class AI : MonoBehaviour
         if (state != States.Chasing) {
             if (fov.TargetInView(player.transform) && !player.hiding) {
                 StopAllCoroutines();
+                screamOnCoolDown = false;
                 state = States.Chasing;
                 animator.SetInteger("state", (int)state);
                 pathing.SetSpeed(chasingSpeed);
@@ -75,6 +77,7 @@ public class AI : MonoBehaviour
         }
 
         if (state == States.Chasing) {
+            Scream();
             if (!fov.TargetInView(player.transform) || player.hiding) {
                 state = States.Searching;
                 animator.SetInteger("state", (int)state);
@@ -113,7 +116,10 @@ public class AI : MonoBehaviour
 
     void Scream()
     {
-
+        if(!screamOnCoolDown) {
+            scream.Play();
+            screamOnCoolDown = true;
+        }
     }
 
     void OpenObject()
@@ -123,15 +129,22 @@ public class AI : MonoBehaviour
         StopSearching();
     }
 
+
     void StopSearching()
     {
         state = States.Roaming;
         StopAllCoroutines();
+        screamOnCoolDown = false;
         animator.SetInteger("state", (int)state);
         pausePathing = false;
         pathing.SetSpeed(normalSpeed);
     }
 
+    IEnumerator ScreamRoutine()
+    {
+        yield return new WaitForSeconds(screamCoolDownTime);
+        screamOnCoolDown = false;
+    }
 
     IEnumerator Searching(Vector3 searchArea)
     {
